@@ -1,0 +1,103 @@
+!
+version 12.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname AS5
+!
+enable secret 5 cisco
+!
+!
+!
+clock timezone UTC 0
+!
+!
+username thisara secret 5 cisco
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree portfast default
+spanning-tree extend system-id
+!
+interface GigabitEthernet0/1
+ switchport trunk native vlan 100
+ switchport trunk allowed vlan 60,100
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface GigabitEthernet1/1
+ switchport trunk native vlan 100
+ switchport trunk allowed vlan 60,100
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface GigabitEthernet2/1
+ switchport access vlan 60
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet3/1
+ switchport access vlan 60
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet4/1
+ switchport access vlan 100
+ switchport trunk native vlan 100
+ switchport mode access
+ switchport nonegotiate
+!
+interface GigabitEthernet5/1
+ switchport trunk native vlan 100
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface GigabitEthernet6/1
+ shutdown
+!
+interface GigabitEthernet7/1
+ shutdown
+!
+interface GigabitEthernet8/1
+ shutdown
+!
+interface GigabitEthernet9/1
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+!
+!
+!
+line con 0
+ logging synchronous
+ login local
+ exec-timeout 5 0
+!
+line vty 0
+ login
+line vty 1 4
+ exec-timeout 5 0
+ logging synchronous
+ login local
+ transport input ssh
+line vty 5 15
+ exec-timeout 5 0
+ logging synchronous
+ login local
+ transport input ssh
+!
+!
+!
+ntp authenticate
+ntp trusted-key 101
+ntp server 172.16.60.5 key 101
+!
+end
+

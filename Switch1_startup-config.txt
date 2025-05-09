@@ -1,0 +1,72 @@
+!
+version 12.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname AS1
+!
+!
+!
+clock timezone UTC 0
+!
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+interface Port-channel1
+ switchport trunk allowed vlan none
+!
+interface GigabitEthernet0/1
+ switchport trunk native vlan 1000
+ switchport trunk allowed vlan 10,20
+ switchport mode trunk
+!
+interface GigabitEthernet1/1
+ switchport trunk native vlan 1000
+ switchport trunk allowed vlan 10,20
+ switchport mode trunk
+!
+interface GigabitEthernet2/1
+ switchport access vlan 10
+ switchport mode access
+!
+interface GigabitEthernet3/1
+!
+interface GigabitEthernet4/1
+!
+interface GigabitEthernet5/1
+!
+interface GigabitEthernet6/1
+!
+interface GigabitEthernet7/1
+!
+interface GigabitEthernet8/1
+!
+interface GigabitEthernet9/1
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+!
+!
+!
+line con 0
+!
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+!
+ntp authentication-key 101 md5 082F585E021C1C 7
+ntp authenticate
+ntp trusted-key 101
+ntp server 172.16.60.5 key 101
+!
+end
+
